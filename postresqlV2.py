@@ -76,19 +76,15 @@ def loadFolderCopy(path):
 #loadFolderSlow(path)
 #loadFolderCopy(path2)
 
-
-
-
-
-
-
 def totalSalesPerDay(item):
     ''' Get list of daily total sales of item per whole date range  '''
     def findCorrectItem(item):
         cur.execute(""" SELECT DISTINCT description from sales2;""")
         itemsList=[v[0] for v in cur]
         try:
-            return difflib.get_close_matches(item,itemsList)[0]
+            item=difflib.get_close_matches(item,itemsList)[0]
+            print=f'Searching for {item}'
+            return item
         except IndexError:
             print(f'Didnt find {item}')
             sys.exit()
@@ -115,13 +111,22 @@ def totalSalesPerDay(item):
         r = searchForTotals(findCorrectItem(item))
     return r
 
+def EODSales():
+    ''' End of day total sales '''
+    cur.execute('''
+    select 
+    sum(cast(payments2.methodtotal as money)) as total,
+    (to_timestamp(payments2.paymenttime,'DD Mon YYYY HH24:MI:SS') - interval '4 hours')::date as date
+    from payments2
+    WHEre payments2.paymentname not in ('DepositPayment')
+    group by date
+    ''')
+    
+    return [v for v in cur]
 
-sales=totalSalesPerDay('Cappucino')
-plt.plot(sales)
+#sales=totalSalesPerDay('50ml hendricks')
 
-plt.show()
-
-
+eodSales=EODSales()
 
 db.close()
 
