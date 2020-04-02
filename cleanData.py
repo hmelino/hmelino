@@ -1,5 +1,5 @@
 def processReports():
-    ''' clean data'''
+    ''' clean data for copy import on postresql'''
     import os
     import csv
     import re

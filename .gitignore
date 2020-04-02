@@ -3,3 +3,5 @@ sqlmodule.py
 postresql.py
 kk.py
 sqlmodule.py
+passwordFile.py
+__pycache__/passwordFile.cpython-38.pyc
