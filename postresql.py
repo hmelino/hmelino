@@ -71,7 +71,7 @@ class Database:
         cleanReports = 'path to empty folder for clean processed , if you use existin folder
         ALL DATA INSIDE WILL BE DELETED  """
         def removeCommas(line):
-            for key in line.keys():
+            for key in ['Details','MethodTotal','Gratuity','PaymentTotal','DepositOwner','EventDate']:
                 try:
                     line[key]=re.sub(',','',line[key])
                 except KeyError:
@@ -89,8 +89,6 @@ class Database:
             outFile=f'{cleanReports}\{filename}'
             
             with open(inFile,'r') as file, open(outFile,'w',newline='') as outputFile:
-            
-                
                 ddata=csv.DictReader(file)
                 data=[removeCommas(v) for v in ddata]
                 fNames=list(ddata.fieldnames)
@@ -118,7 +116,7 @@ class Database:
             cur.execute(copyQuery)
             
             cur.execute(copyQuery)
-            print(f'Processed {file}')
+            print(f'Copied {file}')
         self.db.commit()
 
     def totalSalesPerDay(self,item):
