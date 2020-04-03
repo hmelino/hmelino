@@ -4,3 +4,5 @@ kk.py
 sqlmodule.py
 passwordFile.py
 __pycache__/passwordFile.cpython-38.pyc
+__pycache__/__init__.cpython-38.pyc
+__pycache__/postresql.cpython-38.pyc
